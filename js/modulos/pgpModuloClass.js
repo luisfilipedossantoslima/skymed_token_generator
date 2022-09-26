@@ -1,5 +1,5 @@
-import * as openpgp from "../libs/openpgp.min.mjs";
-
+// import * as openpgp from "../libs/openpgp.min.js";
+// const openpgp = require('openpgp');
 class PgpModuloClass
 {
 
