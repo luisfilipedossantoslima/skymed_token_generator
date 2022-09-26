@@ -12,12 +12,5 @@ services:
             - VIRTUAL_HOST=tokengenerator.luisdevelopment.ml
         networks:
             - web
-
-    php-fpm:
-        image: php:8-fpm
-        volumes:
-            - ./:/var/www/html
-        networks:
-            - web
 networks:
   web:
