@@ -14,7 +14,7 @@ class ProgramaPrincipal
     constructor(
         elementoLogs,
         elementoToken,
-        elementoArquivo,
+        // elementoArquivo,
         macAddress, 
         usuario, 
         senha, 
@@ -26,7 +26,7 @@ class ProgramaPrincipal
         {
             this.elementoLogs = elementoLogs;
             this.elementoToken = elementoToken;
-            this.elementoArquivo = elementoArquivo;
+            // this.elementoArquivo = elementoArquivo;
             this.macAddress = macAddress;
             this.usuario = usuario;
             this.senha = senha;
@@ -61,8 +61,15 @@ class ProgramaPrincipal
         this._validacao.campoObrigatorio(CAMPOS.UNIDADE, this.unidade);
     }
 
-    async lerChavePublica(){
-        this.chavePublica = await this._arquivo.lerArquivoComoStringAsync(this.elementoArquivo);
+    // async lerChavePublica(){
+    //     this.chavePublica = await this._arquivo.lerArquivoComoStringAsync(this.elementoArquivo);
+    //     this.cadastrarLog("leitura de chave pública executada com sucesso!");
+    // }
+
+    async buscarChavePublica(){
+        const respostaChavePublica = await this._clientehttp.getJsonAsync(this.dominio+"/Auth/GetKeys/"+this.guid);
+        this.chavePublica = respostaChavePublica.dados[0].valorChave;
+        console.log(this.chavePublica);
         this.cadastrarLog("leitura de chave pública executada com sucesso!");
     }
 
@@ -104,11 +111,11 @@ class ProgramaPrincipal
 }
 
 
-$('#chave').change(async (evento) => {
+$('#gerarToken').click(async (evento) => {
     const init = new ProgramaPrincipal(
             $('#logs'),
             $('#token'),
-            evento.target,
+            // evento.target,
             '',
             $('#usuario').val(),
             $('#senha').val(),
@@ -122,7 +129,7 @@ $('#chave').change(async (evento) => {
     init.limparLog();
     init.selecionarDominio();
     init.validacoes();
-    await init.lerChavePublica();
+    await init.buscarChavePublica();
     await init.criptografarSenha();
     await init.autenticar();
     await init.acessar();
@@ -132,12 +139,3 @@ $('#enviarMensagem').click(()=>{
     const init = new ProgramaPrincipal($('#logs'));
     init.enviarLogParaLuis();
 });
-
-// let AUTH_USUARIO = "mateus.aguiar";
-// let AUTH_SENHA = "Mateus123!";
-// let AUTH_SISTEMA = "SKA";
-// let AUTH_GUID = "BE7B9FA7-F1B4-4E68-9E67-E72A4D13B8F4";
-// let AUTH_ID_EMPRESA = 1;
-// let AUTH_ID_EMPRESA_UNIDADE = 1;
-// let AUTH_DOMINIO = "https://skauth-dev.skymed.app.br/api";
-// let AUTH_MAC_ADDRESS = "mac";

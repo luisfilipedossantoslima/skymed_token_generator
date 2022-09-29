@@ -47,19 +47,36 @@ class HttpClienteClass
         }
     }
 
-    getJsonAsync = (url) =>
+    getJsonAsync = async (url) =>
+    {
+        let cabecalhos = new Headers();
+        cabecalhos.append("accept", "application/json");
+        cabecalhos.append("Content-Type", "application/json");
+
+        let configuracoesRequisicao = {
+            method: 'GET',
+            headers: cabecalhos,
+            redirect: 'follow'
+        };
+
+        let resposta = '';
+
+        try{
+            resposta = await fetch(url, configuracoesRequisicao);
+            return resposta.json();
+        }catch(erro){
+            return "Erro na requisição :"+url;
+        }
+    }
+
+
+    putJsonAsync = async (url, corpo) =>
     {
         throw 'Função não implementada';
     }
 
 
-    putJsonAsync = (url, corpo) =>
-    {
-        throw 'Função não implementada';
-    }
-
-
-    deleteAsync = (url) =>
+    deleteAsync = async (url) =>
     {
         throw 'Função não implementada';
     }
