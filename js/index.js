@@ -1,138 +1,54 @@
-import { ArquivoModuloClass } from "./modulos/arquivoModuloClass.js";
-import { HttpClienteClass } from "./modulos/httpClienteModuloClass.js";
-import { ArmazenamentoLocalModuloClass } from "./modulos/armazenamentoLocalModuloClass.js";
-import { ValidacaoModuloClass } from "./modulos/validacaoModuloClass.js";
-import { PgpModuloClass } from "./modulos/pgpModuloClass.js";
-import { SenhaDto } from "./dtos/SenhaDto.js";
-import { RequisicaoAutenticacaoDto } from "./dtos/RequisicaoAutenticacaoDto.js";
-import { RequisicaoLoginDto } from "./dtos/RequisicaoLoginDto.js";
-import { DOMINIO } from "./enums/DominioEnum.js"
-import { CAMPOS } from "./enums/CamposEnum.js"
+import { RotinaDeAutenticacaoClass } from "./modulos/rotinaDeAutenticacaoModuloClass.js";
+import { RotinaDeAcessoModuloClass } from "./modulos/rotinaDeAcessoModuloClass.js";
+
 
 class ProgramaPrincipal
 {
-    constructor(
-        elementoLogs,
-        elementoToken,
-        // elementoArquivo,
-        macAddress, 
-        usuario, 
-        senha, 
-        sistema, 
-        guid, 
-        empresa, 
-        unidade, 
-        url)
-        {
-            this.elementoLogs = elementoLogs;
-            this.elementoToken = elementoToken;
-            // this.elementoArquivo = elementoArquivo;
-            this.macAddress = macAddress;
-            this.usuario = usuario;
-            this.senha = senha;
-            this.sistema = sistema;
-            this.guid = guid;
-            this.empresa = empresa;
-            this.unidade = unidade;
-            this.url = url;
-            this._arquivo = new ArquivoModuloClass();
-            this._armazenamentoLocal = new ArmazenamentoLocalModuloClass();
-            this._clientehttp = new HttpClienteClass();
-            this._validacao = new ValidacaoModuloClass();
-            this._pgp = new PgpModuloClass();
-        }
-
-    dominio;
-    chavePublica;
-    senhaCriptografada;
-    respostaAutenticacao;
-
-    selecionarDominio(){
-        this.dominio = this.url == 1? DOMINIO.DESENVOLVIMENTO:DOMINIO.PRODUCAO;
-        this.cadastrarLog(this.dominio);
-    }
-
-    validacoes(){
-        this._validacao.campoObrigatorio(CAMPOS.USUARIO, this.usuario);
-        this._validacao.campoObrigatorio(CAMPOS.SISTEMA, this.sistema);
-        this._validacao.campoObrigatorio(CAMPOS.SENHA, this.senha);
-        this._validacao.campoObrigatorio(CAMPOS.GUID, this.guid);
-        this._validacao.campoObrigatorio(CAMPOS.EMPRESA, this.empresa);
-        this._validacao.campoObrigatorio(CAMPOS.UNIDADE, this.unidade);
-    }
-
-    // async lerChavePublica(){
-    //     this.chavePublica = await this._arquivo.lerArquivoComoStringAsync(this.elementoArquivo);
-    //     this.cadastrarLog("leitura de chave pública executada com sucesso!");
-    // }
-
-    async buscarChavePublica(){
-        const respostaChavePublica = await this._clientehttp.getJsonAsync(this.dominio+"/Auth/GetKeys/"+this.guid);
-        this.chavePublica = respostaChavePublica.dados[0].valorChave;
-        console.log(this.chavePublica);
-        this.cadastrarLog("leitura de chave pública executada com sucesso!");
-    }
-
-    async criptografarSenha(){
-        const conteudoParaCriptografar = new SenhaDto(this.senha);
-        this.senhaCriptografada = await this._pgp.criptografarAsync(conteudoParaCriptografar, this.chavePublica);
-        this.cadastrarLog("criptografia da senha executada com sucesso!");
-    }
-
-    async autenticar(){
-        const requisicaoAutenticacao = new RequisicaoAutenticacaoDto(this.usuario, this.sistema, this.guid, this.senhaCriptografada);
-        this.respostaAutenticacao = await this._clientehttp.postJsonAsync(this.dominio+"/Auth/Autentication",requisicaoAutenticacao);
-        this.cadastrarLog(JSON.stringify(this.respostaAutenticacao));
-    }
-
-    async acessar(){
-        const requisicaoLogin = new RequisicaoLoginDto(this.empresa,this.unidade,this.macAddress);
-        let respostaLogin = await this._clientehttp.postJsonAsync(this.dominio+"/Auth/Login",requisicaoLogin, this.respostaAutenticacao.dados[0]);
-        this.cadastrarLog(JSON.stringify(respostaLogin));
-        this.elementoToken.val(respostaLogin.dados[0]);
-        Swal.fire('Token atualizado com sucesso!')
-    }
-
-    cadastrarLog(mensagem){
-        this.elementoLogs.val(this.elementoLogs.val()+"\n\n"+mensagem);
-    }
-
-    limparLog(){
-        this.elementoLogs.val("");
-    }
-
-    enviarLogParaLuis(){
-        let textoFormatado = window.encodeURIComponent(this.elementoLogs.val());
-        window.open("https://wa.me/+5585981599833?text="+ textoFormatado, "_blank");
-        window.open('mailto:luisphilip90@gmail.com?subject=testeAuth&body='+textoFormatado);
-
-        //https://api.whatsapp.com/send?phone=+5585981599833&text=TextoParaEnviar
-    }
-}
-
-
-$('#gerarToken').click(async (evento) => {
-    const init = new ProgramaPrincipal(
+    static async rotinaDeAutenticacao(){
+        const _rotinaDeAutenticacao = new RotinaDeAutenticacaoClass(
+            $('#url').val(),
             $('#logs'),
-            $('#token'),
-            // evento.target,
-            '',
             $('#usuario').val(),
             $('#senha').val(),
             $('#sistema').val(),
             $('#guid').val(),
-            $('#empresa').val(),
-            $('#unidade').val(),
-            $('#url').val()
-    );
+            $('#token'),
+            $('#empresaUnidade'),
+        );
 
-    init.limparLog();
-    init.selecionarDominio();
-    init.validacoes();
-    await init.buscarChavePublica();
-    await init.criptografarSenha();
-    await init.autenticar();
-    await init.acessar();
+        _rotinaDeAutenticacao.limparLog();
+        _rotinaDeAutenticacao.selecionarDominio();
+        _rotinaDeAutenticacao.validacoes();
+        await _rotinaDeAutenticacao.buscarChavePublica();
+        await _rotinaDeAutenticacao.criptografarSenha();
+        await _rotinaDeAutenticacao.autenticar();
+        await _rotinaDeAutenticacao.buscarUnidades();
+        await _rotinaDeAutenticacao.mostrarNomeDaEmpresaEUnidades();
+    }
+
+    static async rotinaDeAcesso(){
+        const _rotinaDeAcesso = new RotinaDeAcessoModuloClass(
+            $('#url').val(),
+            $('#logs'),
+            $('#empresaUnidade').val(),
+            'mac',
+            $('#token'),
+        );
+
+        _rotinaDeAcesso.selecionarDominio();
+        await _rotinaDeAcesso.acessar();
+    }
+
+
+}
+
+
+$('#carregarUnidades').click(async () => {
+    await ProgramaPrincipal.rotinaDeAutenticacao();
+});
+
+$('#gerarToken').click(async () => {
+    await ProgramaPrincipal.rotinaDeAcesso();
 });
 
 $('#enviarMensagem').click(()=>{

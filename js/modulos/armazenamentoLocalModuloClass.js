@@ -5,7 +5,6 @@ class ArmazenamentoLocalModuloClass
   }
 
   ler(chave){
-    console.log(chave)
     return localStorage.getItem(chave);
   }
 

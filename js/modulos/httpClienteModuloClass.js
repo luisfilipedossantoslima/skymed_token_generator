@@ -69,6 +69,29 @@ class HttpClienteClass
         }
     }
 
+    getJsonAsync = async (url, jwtToken) =>
+    {
+        let cabecalhos = new Headers();
+        cabecalhos.append("accept", "application/json");
+        cabecalhos.append("Content-Type", "application/json");
+        cabecalhos.append("Authorization", "Bearer "+jwtToken);
+
+        let configuracoesRequisicao = {
+            method: 'GET',
+            headers: cabecalhos,
+            redirect: 'follow'
+        };
+
+        let resposta = '';
+
+        try{
+            resposta = await fetch(url, configuracoesRequisicao);
+            return resposta.json();
+        }catch(erro){
+            return "Erro na requisição :"+url;
+        }
+    }
+
 
     putJsonAsync = async (url, corpo) =>
     {

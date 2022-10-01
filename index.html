@@ -28,6 +28,14 @@
                     <div class="col-6">
                         <div class="row mt-4">
                             <div class="col-auto">
+                                <select id="url" class="form-control form-select entradaDeTexto">
+                                    <option value="1">HOMOLOGAÇÃO</option>
+                                    <option value="2">PRODUÇÃO</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-auto">
                             <input type="text" placeholder="USUÁRIO" id="usuario" class="form-control entradaDeTexto">
                             </div>
                         </div>
@@ -48,19 +56,12 @@
                         </div>
                         <div class="row mt-4">
                             <div class="col-auto">
-                                <input type="text" placeholder="EMPRESA" id="empresa" class="form-control entradaDeTexto">
+                                <input type="button" id="carregarUnidades" class="form-control btn botao entradaDeTexto" value="Carregar Unidades">
                             </div>
                         </div>
                         <div class="row mt-4">
                             <div class="col-auto">
-                                <input type="text" placeholder="UNIDADE" id="unidade" class="form-control entradaDeTexto">
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-auto">
-                                <select id="url" class="form-control form-select entradaDeTexto">
-                                    <option value="1">HOMOLOGAÇÃO</option>
-                                    <option value="2">PRODUÇÃO</option>
+                                <select id="empresaUnidade" class="form-control form-select entradaDeTexto">
                                 </select>
                             </div>
                         </div>
