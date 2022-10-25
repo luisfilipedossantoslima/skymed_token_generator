@@ -34,9 +34,17 @@ class ProgramaPrincipal
             'mac',
             $('#token'),
         );
-
+        $('#conteudo').hide();
+        $('#carregamento').show();
+        
         _rotinaDeAcesso.selecionarDominio();
-        await _rotinaDeAcesso.acessar();
+        await _rotinaDeAcesso.acessar().then(()=>{
+            $('#gerarToken').hide();
+            $('#carregamento').hide();
+            $('#carregarUnidades').show();
+            $('#conteudo').show();
+        });
+        
     }
 
 
@@ -45,7 +53,12 @@ class ProgramaPrincipal
 
 $('#carregarUnidades').click(async () => {
     await ProgramaPrincipal.rotinaDeAutenticacao();
+    $('#gerarToken').show();
+    $('#carregarUnidades').hide();
 });
+
+$('#gerarToken').hide();
+$('#carregamento').hide();
 
 $('#gerarToken').click(async () => {
     await ProgramaPrincipal.rotinaDeAcesso();

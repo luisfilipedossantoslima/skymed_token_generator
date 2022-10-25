@@ -16,96 +16,101 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 </head>
 <body>
-    <section class="titulo">
-        <h1 class="container h1 text-center bold p-4">
-            SKYMED .
-        </h1>
-    </section>
-    <section>
-        <div class="container">
-            <div class="container text-center">
-                <div class="row g-3 align-items-center">
-                    <div class="col-6">
-                        <div class="row mt-4">
-                            <div class="col-auto">
-                                <select id="url" class="form-control form-select entradaDeTexto">
-                                    <option value="1">HOMOLOGAÇÃO</option>
-                                    <option value="2">PRODUÇÃO</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-auto">
-                            <input type="text" placeholder="USUÁRIO" id="usuario" class="form-control entradaDeTexto">
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-auto">
-                                <input type="text" placeholder="SENHA" id="senha" class="form-control entradaDeTexto">
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-auto">
-                                <input type="text" placeholder="SISTEMA" id="sistema" class="form-control entradaDeTexto">
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-auto">
-                                <input type="text" placeholder="GUID" id="guid" class="form-control entradaDeTexto">
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-auto">
-                                <input type="button" id="carregarUnidades" class="form-control btn botao entradaDeTexto" value="Carregar Unidades">
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-auto">
-                                <select id="empresaUnidade" class="form-control form-select entradaDeTexto">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-auto">
-                                <input type="button" id="gerarToken" class="form-control btn botao entradaDeTexto" value="Gerar Token">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="row mt-4">
-                            <div class="col-auto">
-                                <h4 class="titulo p-2 rounded">Token utilizado na autenticação</h4>
-                                <textarea id="token" class="form-control border rounded" rows="4" cols="60"></textarea>
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-auto">
-                                <h4 class="titulo p-2 rounded">Logs</h4>
-                                <textarea id="logs" class="form-control border rounded" rows="4" cols="60"></textarea>
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-auto mx-auto">
-                                <input type="button" id="enviarMensagem" class="form-control btn botao" value="encaminhar">
-                            </div>
-                        </div>
-                    </div>
-                  </div>
-            </div>
-            <div class="container">
-                <pre id="output"></pre>
-            </div>
-            <div class="container">
-                <!-- <input value="enviar" type="button" id="button"> -->
-            </div>
-        </div>
-    </section>
+    <div id="conteudo">
 
-    <section class="titulo fixed-bottom">
-        <div class="container text-center p-2">
-            Desenvolvido por Luis Filipe
-        </div>
-    </section>
+        <section class="titulo">
+            <h1 class="container h1 text-center bold p-4">
+                SKYMED
+            </h1>
+        </section>
+        <section>
+            <div class="container">
+                <div class="container text-center">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-6">
+                            <div class="row mt-4">
+                                <div class="col-auto">
+                                    <select id="url" class="form-control form-select entradaDeTexto">
+                                        <option value="1">HOMOLOGAÇÃO</option>
+                                        <option value="2">PRODUÇÃO</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-auto">
+                                <input type="text" placeholder="USUÁRIO" id="usuario" class="form-control entradaDeTexto">
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-auto">
+                                    <input type="text" placeholder="SENHA" id="senha" class="form-control entradaDeTexto">
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-auto">
+                                    <input type="text" placeholder="SISTEMA" id="sistema" class="form-control entradaDeTexto">
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-auto">
+                                    <input type="text" placeholder="GUID" id="guid" class="form-control entradaDeTexto">
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-auto">
+                                    <input type="button" id="carregarUnidades" class="form-control btn botao entradaDeTexto" value="Carregar Unidades">
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-auto">
+                                    <select id="empresaUnidade" class="form-control form-select entradaDeTexto">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-auto">
+                                    <input type="button" id="gerarToken" class="form-control btn botao entradaDeTexto" value="Gerar Token">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row mt-4">
+                                <div class="col-auto">
+                                    <h4 class="titulo p-2 rounded">Token utilizado na autenticação</h4>
+                                    <textarea id="token" class="form-control border rounded" rows="4" cols="60"></textarea>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-auto">
+                                    <h4 class="titulo p-2 rounded">Logs</h4>
+                                    <textarea id="logs" class="form-control border rounded" rows="4" cols="60"></textarea>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-auto mx-auto">
+                                    <input type="button" id="enviarMensagem" class="form-control btn botao" value="encaminhar">
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="container">
+                    <pre id="output"></pre>
+                </div>
+                <div class="container">
+                    <!-- <input value="enviar" type="button" id="button"> -->
+                </div>
+            </div>
+        </section>
+        <section class="titulo fixed-bottom">
+            <div class="container text-center p-2">
+                Desenvolvido por Luis Filipe
+            </div>
+        </section>
+    </div>
+    <div id="carregamento">
+        <div class="spinner-border carregando" role="status"></div>
+    </div>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
