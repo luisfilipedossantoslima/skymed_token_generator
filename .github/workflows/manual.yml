@@ -16,7 +16,9 @@ jobs:
         HOST: ${{secrets.SSH_HOST}}
         USER: ${{secrets.SSH_USER}}
         PRIVATE_SSH_KEY: ${{secrets.SSH_PRIVATE_KEY}}
-        COMMAND: "cd applications && rm -rf skymed_token_generator 
-        && git clone git@github.com:luisdevelopment/skymed_token_generator.git
-        && cd skymed_token_generator
-        && docker-compose up -d" 
+        COMMAND: |
+          cd applications
+          rm -rf skymed_token_generator 
+          git clone git@github.com:luisdevelopment/skymed_token_generator.git
+          cd skymed_token_generator
+          docker-compose up -d
