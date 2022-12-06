@@ -7,6 +7,7 @@ class SenhaDto{
     serializar(){
         return JSON.stringify(this);
     }
+
 }
 
 export { SenhaDto }

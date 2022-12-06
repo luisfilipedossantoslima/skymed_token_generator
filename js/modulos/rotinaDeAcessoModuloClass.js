@@ -31,7 +31,7 @@ class RotinaDeAcessoModuloClass
         const requisicaoLogin = new RequisicaoLoginDto(this._armazenamentoLocal.ler("empresa"),this.unidade,this.macAddress);
         let respostaLogin = await this._clientehttp.postJsonAsync(this.dominio+"/Auth/Login",requisicaoLogin, this._armazenamentoLocal.ler("token"));
         this.cadastrarLog(JSON.stringify(respostaLogin));
-        this.elementoToken.val(respostaLogin.dados[0]);
+        this.elementoToken.val(respostaLogin.dados.token);
         Swal.fire('Token atualizado com sucesso!')
     }
 

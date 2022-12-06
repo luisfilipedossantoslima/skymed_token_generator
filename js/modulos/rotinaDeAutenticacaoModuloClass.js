@@ -54,7 +54,7 @@ class RotinaDeAutenticacaoClass
 
     async buscarChavePublica(){
         const respostaChavePublica = await this._clientehttp.getJsonAsync(this.dominio+"/Auth/GetKeys/"+this.guid);
-        this.chavePublica = respostaChavePublica.dados[0].valorChave;
+        this.chavePublica = respostaChavePublica.dados.valorChave;
         this.cadastrarLog("Chave pública:"+ this.chavePublica);
     }
 
@@ -66,8 +66,9 @@ class RotinaDeAutenticacaoClass
 
     async autenticar(){
         const requisicaoAutenticacao = new RequisicaoAutenticacaoDto(this.usuario, this.sistema, this.guid, this.senhaCriptografada);
+        console.log(requisicaoAutenticacao)
         this.respostaAutenticacao = await this._clientehttp.postJsonAsync(this.dominio+"/Auth/Autentication",requisicaoAutenticacao);
-        this._armazenamentoLocal.salvar("token",this.respostaAutenticacao.dados[0]);
+        this._armazenamentoLocal.salvar("token",this.respostaAutenticacao.dados.token);
         this.cadastrarLog("Resposta da autenticação:"+JSON.stringify(this.respostaAutenticacao));
     }
 

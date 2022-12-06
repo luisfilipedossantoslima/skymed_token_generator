@@ -41,33 +41,14 @@ class HttpClienteClass
 
         try{
             resposta = await fetch(url, configuracoesRequisicao);
+            if(resposta.status >=400 && resposta.status <= 600) throw resposta;
             return resposta.json();
         }catch(erro){
-            return "Erro na requisição :"+url
+            alert(await erro.json())
+            return "Erro na requisição : "+url
         }
     }
 
-    getJsonAsync = async (url) =>
-    {
-        let cabecalhos = new Headers();
-        cabecalhos.append("accept", "application/json");
-        cabecalhos.append("Content-Type", "application/json");
-
-        let configuracoesRequisicao = {
-            method: 'GET',
-            headers: cabecalhos,
-            redirect: 'follow'
-        };
-
-        let resposta = '';
-
-        try{
-            resposta = await fetch(url, configuracoesRequisicao);
-            return resposta.json();
-        }catch(erro){
-            return "Erro na requisição :"+url;
-        }
-    }
 
     getJsonAsync = async (url, jwtToken) =>
     {
@@ -86,9 +67,11 @@ class HttpClienteClass
 
         try{
             resposta = await fetch(url, configuracoesRequisicao);
+            if(resposta.status >=400 && resposta.status <= 600) throw resposta;
             return resposta.json();
         }catch(erro){
-            return "Erro na requisição :"+url;
+            alert(await erro.json())
+            return "Erro na requisição : "+url;
         }
     }
 
