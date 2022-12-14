@@ -1,8 +1,7 @@
 class SenhaDto{
-    FATOR_DE_CORRECAO_HORA = 60*1000;
     constructor(senha){
         this.password = senha;
-        this.data = new Date(Date.now()-FATOR_DE_CORRECAO_HORA).toISOString();
+        this.data = new Date(Date.now()-60*1000).toISOString();
     }
 
     serializar(){
