@@ -1,6 +1,7 @@
 const DOMINIO = Object.freeze({
 	DESENVOLVIMENTO: "https://skauth-dev.skymed.app.br/api",
-	PRODUCAO: "https://skauth.skymed.app.br/api"
+	PRODUCAO: "https://skauth.skymed.app.br/api",
+	LOCAL: "http://localhost:8083/api"
 })
 
 // const DOMINIO = Object.freeze({
