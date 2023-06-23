@@ -41,7 +41,9 @@ class RotinaDeAutenticacaoClass
     respostaBuscarUnidades;
 
     selecionarDominio(){
-        this.dominio = this.url == 1? DOMINIO.DESENVOLVIMENTO:DOMINIO.PRODUCAO;
+        if(this.url == 1){this.dominio = DOMINIO.DESENVOLVIMENTO}
+        if(this.url == 2){this.dominio = DOMINIO.PRODUCAO}
+        if(this.url == 3){this.dominio = DOMINIO.LOCAL}
         this.cadastrarLog("Domínio utilizado:" + this.dominio);
     }
 
